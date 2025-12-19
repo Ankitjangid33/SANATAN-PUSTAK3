@@ -12,8 +12,8 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+  destination: (_req, _file, cb) => cb(null, uploadsDir),
+  filename: (_req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
 });
 const upload = multer({ storage });
 
@@ -43,12 +43,27 @@ router.get("/:id", async (req, res) => {
 // Create new book (Admin)
 router.post("/", upload.single("coverImage"), async (req, res) => {
   try {
-    const { title, category, description, originalLanguage } = req.body;
+    const {
+      title,
+      category,
+      description,
+      originalLanguage,
+      author,
+      year,
+      verses,
+      chapters,
+      enabledFields,
+    } = req.body;
     const book = new Book({
       title,
       category,
       description,
       originalLanguage,
+      author,
+      year,
+      verses: verses ? Number(verses) : undefined,
+      chapters: chapters ? Number(chapters) : undefined,
+      enabledFields: enabledFields ? JSON.parse(enabledFields) : undefined,
       coverImage: req.file ? `/uploads/${req.file.filename}` : null,
     });
     await book.save();
@@ -61,8 +76,28 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
 // Update book (Admin)
 router.put("/:id", upload.single("coverImage"), async (req, res) => {
   try {
-    const { title, category, description, originalLanguage } = req.body;
-    const updateData = { title, category, description, originalLanguage };
+    const {
+      title,
+      category,
+      description,
+      originalLanguage,
+      author,
+      year,
+      verses,
+      chapters,
+      enabledFields,
+    } = req.body;
+    const updateData = {
+      title,
+      category,
+      description,
+      originalLanguage,
+      author,
+      year,
+      verses: verses ? Number(verses) : undefined,
+      chapters: chapters ? Number(chapters) : undefined,
+      enabledFields: enabledFields ? JSON.parse(enabledFields) : undefined,
+    };
     if (req.file) updateData.coverImage = `/uploads/${req.file.filename}`;
 
     const book = await Book.findByIdAndUpdate(req.params.id, updateData, {
