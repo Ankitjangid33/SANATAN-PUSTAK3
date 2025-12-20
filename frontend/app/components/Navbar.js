@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { BookOpen, Search } from "lucide-react";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchLang, setSearchLang] = useState("all"); // all, hindi, english
   const router = useRouter();
+
+  if (pathname === "/arya-super-admin/login") return null;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -22,7 +26,9 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link href="/" className="navbar-brand">
-          <span className="brand-icon">🕉️</span>
+          <span className="brand-icon">
+            <BookOpen size={24} />
+          </span>
           <span className="brand-text">Sacred Texts</span>
         </Link>
 
@@ -45,7 +51,7 @@ export default function Navbar() {
               <option value="english">English</option>
             </select>
             <button type="submit" className="search-btn">
-              🔍
+              <Search size={20} color="white" />
             </button>
           </div>
         </form>

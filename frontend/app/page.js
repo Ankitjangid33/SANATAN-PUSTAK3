@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { ScrollText } from "lucide-react";
 
 export default function Home() {
   const [books, setBooks] = useState([]);
@@ -115,7 +116,15 @@ export default function Home() {
                     {book.description?.length > 100 ? "..." : ""}
                   </p>
                   <div className="book-meta">
-                    📜 {book.translations?.length || 0} translation
+                    <ScrollText
+                      size={16}
+                      style={{
+                        display: "inline",
+                        verticalAlign: "middle",
+                        marginRight: "4px",
+                      }}
+                    />{" "}
+                    {book.translations?.length || 0} translation
                     {book.translations?.length !== 1 ? "s" : ""} available
                   </div>
                 </div>

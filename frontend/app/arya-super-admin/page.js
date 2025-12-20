@@ -3,6 +3,36 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  Library,
+  LayoutDashboard,
+  BookText,
+  PlusCircle,
+  Tags,
+  Globe,
+  LogOut,
+  Plus,
+  Pencil,
+  Trash2,
+  FileText,
+  Save,
+  X,
+  LayoutList,
+  Tag,
+  Inbox,
+  Calendar,
+  Scroll,
+  BookOpen,
+  ArrowLeft,
+
+  User,
+  Settings,
+  Lightbulb,
+  List,
+  Book,
+  Check,
+  ChevronRight
+} from "lucide-react";
 
 const DEFAULT_FIELDS = [
   { key: "title", label: "Title", type: "text", required: true },
@@ -323,10 +353,13 @@ export default function AdminPage() {
   const Sidebar = () => (
     <aside style={styles.sidebar}>
       <div style={styles.sidebarHeader}>
-        <h2 style={{ margin: 0, fontSize: "1.2rem", fontWeight: 600 }}>
-          📚 Sacred Texts
-        </h2>
-        <p style={{ margin: "0.25rem 0 0", fontSize: "0.8rem", opacity: 0.7 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <Library size={24} style={{ color: "#fbbf24" }} />
+          <h2 style={{ margin: 0, fontSize: "1.2rem", fontWeight: 600 }}>
+            Sacred Texts
+          </h2>
+        </div>
+        <p style={{ margin: "0.25rem 0 0 2.25rem", fontSize: "0.8rem", opacity: 0.7 }}>
           Admin Panel
         </p>
       </div>
@@ -338,7 +371,7 @@ export default function AdminPage() {
             setView("list");
           }}
         >
-          <span>📊</span> Dashboard
+          <LayoutDashboard size={20} /> Dashboard
         </div>
         <div
           style={styles.navItem(activeTab === "books")}
@@ -347,10 +380,10 @@ export default function AdminPage() {
             setView("list");
           }}
         >
-          <span>📖</span> All Books
+          <BookText size={20} /> All Books
         </div>
         <div style={styles.navItem(activeTab === "add")} onClick={startAddBook}>
-          <span>➕</span> Add New Book
+          <PlusCircle size={20} /> Add New Book
         </div>
         <div
           style={styles.navItem(activeTab === "categories")}
@@ -359,7 +392,7 @@ export default function AdminPage() {
             setView("list");
           }}
         >
-          <span>🏷️</span> Categories
+          <Tags size={20} /> Categories
         </div>
         <div
           style={{
@@ -369,7 +402,7 @@ export default function AdminPage() {
         />
         <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
           <div style={styles.navItem(false)}>
-            <span>🌐</span> View Website
+            <Globe size={20} /> View Website
           </div>
         </Link>
       </nav>
@@ -405,9 +438,13 @@ export default function AdminPage() {
               color: "white",
               fontSize: "0.8rem",
               cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
             }}
           >
-            🚪 Logout
+            <LogOut size={16} /> Logout
           </button>
         </div>
       </div>
@@ -437,12 +474,13 @@ export default function AdminPage() {
           }}
         >
           <div style={styles.statCard}>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#6b7280" }}>
-              Total Books
-            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#6b7280", marginBottom: "0.5rem" }}>
+              <BookText size={18} />
+              <p style={{ margin: 0, fontSize: "0.85rem" }}>Total Books</p>
+            </div>
             <p
               style={{
-                margin: "0.5rem 0 0",
+                margin: 0,
                 fontSize: "2rem",
                 fontWeight: 700,
                 color: "#4f46e5",
@@ -452,12 +490,13 @@ export default function AdminPage() {
             </p>
           </div>
           <div style={styles.statCard}>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#6b7280" }}>
-              Total Translations
-            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#6b7280", marginBottom: "0.5rem" }}>
+              <Globe size={18} />
+              <p style={{ margin: 0, fontSize: "0.85rem" }}>Total Translations</p>
+            </div>
             <p
               style={{
-                margin: "0.5rem 0 0",
+                margin: 0,
                 fontSize: "2rem",
                 fontWeight: 700,
                 color: "#10b981",
@@ -467,12 +506,13 @@ export default function AdminPage() {
             </p>
           </div>
           <div style={styles.statCard}>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#6b7280" }}>
-              Categories
-            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#6b7280", marginBottom: "0.5rem" }}>
+              <Tags size={18} />
+              <p style={{ margin: 0, fontSize: "0.85rem" }}>Categories</p>
+            </div>
             <p
               style={{
-                margin: "0.5rem 0 0",
+                margin: 0,
                 fontSize: "2rem",
                 fontWeight: 700,
                 color: "#f59e0b",
@@ -499,23 +539,30 @@ export default function AdminPage() {
                 <p style={{ margin: 0, fontWeight: 500, color: "#1f2937" }}>
                   {book.title}
                 </p>
-                <p
-                  style={{
-                    margin: "0.2rem 0 0",
-                    fontSize: "0.8rem",
-                    color: "#6b7280",
-                  }}
-                >
-                  {book.category}
-                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginTop: "0.2rem" }}>
+                  <Tag size={12} color="#6b7280" />
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: "0.8rem",
+                      color: "#6b7280",
+                    }}
+                  >
+                    {book.category}
+                  </p>
+                </div>
               </div>
-              <span style={{ fontSize: "0.8rem", color: "#6b7280" }}>
-                {book.translations?.length || 0} translations
-              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.8rem", color: "#6b7280" }}>
+                <Globe size={14} />
+                <span>{book.translations?.length || 0} translations</span>
+              </div>
             </div>
           ))}
           {books.length === 0 && (
-            <p style={{ color: "#6b7280" }}>No books yet</p>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#6b7280" }}>
+              <Inbox size={18} />
+              <p style={{ margin: 0 }}>No books yet</p>
+            </div>
           )}
         </div>
       </div>
@@ -526,413 +573,403 @@ export default function AdminPage() {
   const renderCategoriesView = () => {
     const catStyles = {
       container: {
-        background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-        minHeight: "calc(100vh - 60px)",
         padding: "2rem",
+        maxWidth: "1600px",
+        margin: "0 auto",
       },
       header: {
         marginBottom: "2rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      },
+      titleBlock: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.25rem",
       },
       title: {
-        color: "white",
-        fontSize: "1.8rem",
-        fontWeight: 600,
+        color: "#1e293b",
+        fontSize: "1.875rem",
+        fontWeight: 700,
         margin: 0,
-        textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        letterSpacing: "-0.025em",
       },
       subtitle: {
-        color: "rgba(255,255,255,0.85)",
+        color: "#64748b",
         fontSize: "0.95rem",
-        margin: "0.25rem 0 0",
+        margin: 0,
       },
       grid: {
         display: "grid",
-        gridTemplateColumns: "400px 1fr",
-        gap: "1.5rem",
+        gridTemplateColumns: "380px 1fr",
+        gap: "2rem",
         alignItems: "start",
       },
       formCard: {
         background: "white",
-        borderRadius: "20px",
+        borderRadius: "16px",
         padding: "2rem",
-        boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        position: "sticky",
+        top: "2rem",
       },
       listCard: {
         background: "white",
-        borderRadius: "20px",
+        borderRadius: "16px",
         padding: "2rem",
-        boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        minHeight: "500px",
       },
       sectionTitle: {
         display: "flex",
         alignItems: "center",
         gap: "0.75rem",
-        margin: "0 0 1.5rem",
+        marginBottom: "1.5rem",
         paddingBottom: "1rem",
-        borderBottom: "2px solid #f3f4f6",
+        borderBottom: "1px solid #e2e8f0",
       },
       sectionIcon: {
-        width: "40px",
-        height: "40px",
-        borderRadius: "12px",
+        width: "36px",
+        height: "36px",
+        borderRadius: "10px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "1.2rem",
+        fontSize: "1.25rem",
+        background: "#fff7ed",
+        color: "#ea580c",
+      },
+      sectionHeading: {
+        margin: 0,
+        color: "#1e293b",
+        fontSize: "1.125rem",
+        fontWeight: 600,
       },
       label: {
         display: "flex",
         alignItems: "center",
         gap: "0.5rem",
         marginBottom: "0.5rem",
-        fontSize: "0.9rem",
-        color: "#374151",
+        fontSize: "0.875rem",
+        color: "#475569",
         fontWeight: 600,
       },
       input: {
         width: "100%",
-        padding: "0.9rem 1rem",
-        borderRadius: "12px",
-        border: "2px solid #e5e7eb",
+        padding: "0.75rem 1rem",
+        borderRadius: "10px",
+        border: "1px solid #cbd5e1",
         fontSize: "0.95rem",
         outline: "none",
-        background: "#fafafa",
-        marginBottom: "1rem",
-        transition: "all 0.2s",
+        background: "#fff",
+        marginBottom: "1.25rem",
+        transition: "all 0.2s ease",
+        color: "#1e293b",
       },
       textarea: {
         width: "100%",
-        padding: "0.9rem 1rem",
-        borderRadius: "12px",
-        border: "2px solid #e5e7eb",
+        padding: "0.75rem 1rem",
+        borderRadius: "10px",
+        border: "1px solid #cbd5e1",
         fontSize: "0.95rem",
         outline: "none",
-        background: "#fafafa",
-        marginBottom: "1rem",
+        background: "#fff",
+        marginBottom: "1.5rem",
         resize: "vertical",
-        minHeight: "100px",
+        minHeight: "120px",
         fontFamily: "inherit",
-        transition: "all 0.2s",
+        transition: "all 0.2s ease",
+        color: "#1e293b",
       },
       submitBtn: {
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         gap: "0.5rem",
-        padding: "0.9rem 1.5rem",
-        background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+        padding: "0.875rem",
+        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
         border: "none",
-        borderRadius: "12px",
+        borderRadius: "10px",
         color: "white",
         fontSize: "0.95rem",
         fontWeight: 600,
         cursor: "pointer",
-        transition: "all 0.3s",
-        boxShadow: "0 4px 15px rgba(245, 158, 11, 0.4)",
+        transition: "all 0.2s ease",
+        boxShadow: "0 4px 6px -1px rgba(234, 88, 12, 0.2)",
       },
       cancelBtn: {
-        padding: "0.9rem 1.5rem",
-        background: "#f3f4f6",
-        border: "none",
-        borderRadius: "12px",
-        color: "#6b7280",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "0.5rem",
+        padding: "0.875rem",
+        marginTop: "0.75rem",
+        background: "white",
+        border: "1px solid #cbd5e1",
+        borderRadius: "10px",
+        color: "#64748b",
         fontSize: "0.95rem",
-        fontWeight: 500,
+        fontWeight: 600,
         cursor: "pointer",
-        transition: "all 0.2s",
+        transition: "all 0.2s ease",
       },
       categoryItem: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "1.25rem",
-        background: "#fafafa",
-        borderRadius: "14px",
-        marginBottom: "0.75rem",
-        border: "2px solid transparent",
-        transition: "all 0.2s",
-      },
-      categoryIcon: {
-        width: "44px",
-        height: "44px",
+        padding: "1rem",
+        background: "#f8fafc",
         borderRadius: "12px",
-        background: "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+        marginBottom: "0.75rem",
+        border: "1px solid #e2e8f0",
+        transition: "all 0.2s ease",
+      },
+      categoryInfo: {
+        display: "flex",
+        alignItems: "center",
+        gap: "1rem",
+      },
+      catIconBg: {
+        width: "48px",
+        height: "48px",
+        borderRadius: "12px",
+        background: "white",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "1.3rem",
-        marginRight: "1rem",
+        fontSize: "1.5rem",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+        border: "1px solid #f1f5f9",
+        color: "#f59e0b",
       },
-      actionBtn: {
-        padding: "0.5rem 1rem",
-        border: "none",
+      actionBtns: {
+        display: "flex",
+        gap: "0.5rem",
+      },
+      editBtn: {
+        padding: "0.5rem",
         borderRadius: "8px",
-        fontSize: "0.85rem",
-        fontWeight: 500,
+        border: "none",
+        background: "#e0f2fe",
+        color: "#0284c7",
         cursor: "pointer",
-        transition: "all 0.2s",
+        transition: "background 0.2s",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      deleteBtn: {
+        padding: "0.5rem",
+        borderRadius: "8px",
+        border: "none",
+        background: "#fee2e2",
+        color: "#dc2626",
+        cursor: "pointer",
+        transition: "background 0.2s",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       },
       emptyState: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "4rem 2rem",
+        color: "#64748b",
         textAlign: "center",
-        padding: "3rem 2rem",
-        color: "#6b7280",
+        background: "#f8fafc",
+        borderRadius: "16px",
+        border: "2px dashed #e2e8f0",
       },
     };
 
     return (
       <>
-        <TopBar title="Categories" />
+        <TopBar title="Categories Management" />
         <div style={catStyles.container}>
           <div style={catStyles.header}>
-            <h1 style={catStyles.title}>🏷️ Manage Categories</h1>
-            <p style={catStyles.subtitle}>
-              Organize your sacred texts into meaningful collections
-            </p>
+            <div style={catStyles.titleBlock}>
+              <h1 style={catStyles.title}>Manage Categories</h1>
+              <p style={catStyles.subtitle}>
+                Create and organize your content categories
+              </p>
+            </div>
+            <div style={{
+              display: "flex",
+              gap: "0.75rem",
+              alignItems: "center",
+              background: "white",
+              padding: "0.5rem 1rem",
+              borderRadius: "50px",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
+            }}>
+              <LayoutList size={18} color="#64748b" />
+              <span style={{ fontSize: "0.875rem", color: "#64748b" }}>
+                Total Categories: <strong>{categories.length}</strong>
+              </span>
+            </div>
           </div>
 
           <div style={catStyles.grid}>
+            {/* Form Section */}
             <div style={catStyles.formCard}>
               <div style={catStyles.sectionTitle}>
-                <div
-                  style={{
-                    ...catStyles.sectionIcon,
-                    background: "linear-gradient(135deg, #f59e0b, #d97706)",
-                    color: "white",
-                  }}
-                >
-                  {editingCategory ? "✏️" : "➕"}
+                <div style={catStyles.sectionIcon}>
+                  {editingCategory ? <Pencil size={18} /> : <Plus size={20} />}
                 </div>
                 <div>
-                  <h3
-                    style={{ margin: 0, color: "#1f2937", fontSize: "1.1rem" }}
-                  >
+                  <h3 style={catStyles.sectionHeading}>
                     {editingCategory ? "Edit Category" : "New Category"}
                   </h3>
-                  <p
-                    style={{
-                      margin: "0.2rem 0 0",
-                      fontSize: "0.85rem",
-                      color: "#6b7280",
-                    }}
-                  >
-                    {editingCategory
-                      ? "Update category details"
-                      : "Create a new category"}
+                  <p style={{ margin: "0.2rem 0 0", fontSize: "0.8rem", color: "#64748b" }}>
+                    {editingCategory ? "Update details below" : "Add a new category"}
                   </p>
                 </div>
               </div>
 
               <form onSubmit={handleCategorySubmit}>
                 <label style={catStyles.label}>
-                  <span>🏷️</span> Category Name
-                  <span style={{ color: "#ef4444", fontSize: "0.75rem" }}>
-                    Required
-                  </span>
+                  <Tag size={16} /> Name <span style={{ color: "#ef4444" }}>*</span>
                 </label>
                 <input
-                  placeholder="e.g., Vedas, Upanishads, Puranas..."
+                  placeholder="e.g. History, Science, Vedas"
                   value={categoryForm.name}
-                  onChange={(e) =>
-                    setCategoryForm((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
-                  }
+                  onChange={(e) => setCategoryForm(prev => ({ ...prev, name: e.target.value }))}
                   required
                   style={catStyles.input}
                   onFocus={(e) => {
-                    e.target.style.borderColor = "#f59e0b";
-                    e.target.style.background = "white";
+                    e.target.style.borderColor = "#ea580c";
+                    e.target.style.boxShadow = "0 0 0 3px rgba(234, 88, 12, 0.1)";
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = "#e5e7eb";
-                    e.target.style.background = "#fafafa";
+                    e.target.style.borderColor = "#cbd5e1";
+                    e.target.style.boxShadow = "none";
                   }}
                 />
 
                 <label style={catStyles.label}>
-                  <span>📝</span> Description
+                  <FileText size={16} /> Description
                 </label>
                 <textarea
-                  placeholder="Brief description of this category..."
+                  placeholder="What is this category about?"
                   value={categoryForm.description}
-                  onChange={(e) =>
-                    setCategoryForm((prev) => ({
-                      ...prev,
-                      description: e.target.value,
-                    }))
-                  }
+                  onChange={(e) => setCategoryForm(prev => ({ ...prev, description: e.target.value }))}
                   style={catStyles.textarea}
                   onFocus={(e) => {
-                    e.target.style.borderColor = "#f59e0b";
-                    e.target.style.background = "white";
+                    e.target.style.borderColor = "#ea580c";
+                    e.target.style.boxShadow = "0 0 0 3px rgba(234, 88, 12, 0.1)";
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = "#e5e7eb";
-                    e.target.style.background = "#fafafa";
+                    e.target.style.borderColor = "#cbd5e1";
+                    e.target.style.boxShadow = "none";
                   }}
                 />
 
-                <div style={{ display: "flex", gap: "0.75rem" }}>
+                <button
+                  type="submit"
+                  style={catStyles.submitBtn}
+                  onMouseOver={(e) => e.currentTarget.style.transform = "translateY(-1px)"}
+                  onMouseOut={(e) => e.currentTarget.style.transform = "translateY(0)"}
+                >
+                  {editingCategory ? <><Save size={18} /> Update Category</> : <><Plus size={18} /> Create Category</>}
+                </button>
+
+                {editingCategory && (
                   <button
-                    type="submit"
-                    style={catStyles.submitBtn}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow =
-                        "0 8px 25px rgba(245, 158, 11, 0.5)";
+                    type="button"
+                    onClick={() => {
+                      setEditingCategory(null);
+                      setCategoryForm({ name: "", description: "" });
                     }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow =
-                        "0 4px 15px rgba(245, 158, 11, 0.4)";
-                    }}
+                    style={catStyles.cancelBtn}
+                    onMouseOver={(e) => e.currentTarget.style.background = "#f1f5f9"}
+                    onMouseOut={(e) => e.currentTarget.style.background = "white"}
                   >
-                    {editingCategory ? "💾 Update" : "✨ Create Category"}
+                    <X size={18} /> Cancel Edit
                   </button>
-                  {editingCategory && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditingCategory(null);
-                        setCategoryForm({ name: "", description: "" });
-                      }}
-                      style={catStyles.cancelBtn}
-                      onMouseOver={(e) =>
-                        (e.currentTarget.style.background = "#e5e7eb")
-                      }
-                      onMouseOut={(e) =>
-                        (e.currentTarget.style.background = "#f3f4f6")
-                      }
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
+                )}
               </form>
             </div>
 
+            {/* List Section */}
             <div style={catStyles.listCard}>
               <div style={catStyles.sectionTitle}>
-                <div
-                  style={{
-                    ...catStyles.sectionIcon,
-                    background: "#ede9fe",
-                    color: "#7c3aed",
-                  }}
-                >
-                  📚
+                <div style={{ ...catStyles.sectionIcon, background: "#e0f2fe", color: "#0284c7" }}>
+                  <Library size={20} />
                 </div>
                 <div>
-                  <h3
-                    style={{ margin: 0, color: "#1f2937", fontSize: "1.1rem" }}
-                  >
-                    All Categories
-                  </h3>
-                  <p
-                    style={{
-                      margin: "0.2rem 0 0",
-                      fontSize: "0.85rem",
-                      color: "#6b7280",
-                    }}
-                  >
-                    {categories.length}{" "}
-                    {categories.length === 1 ? "category" : "categories"} total
+                  <h3 style={catStyles.sectionHeading}>Existing Categories</h3>
+                  <p style={{ margin: "0.2rem 0 0", fontSize: "0.8rem", color: "#64748b" }}>
+                    View and manage your list
                   </p>
                 </div>
               </div>
 
               {categories.length === 0 ? (
                 <div style={catStyles.emptyState}>
-                  <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>
-                    🏷️
+                  <div style={{ marginBottom: "1rem", opacity: 0.5 }}>
+                    <Inbox size={48} strokeWidth={1.5} />
                   </div>
-                  <p
-                    style={{
-                      fontSize: "1.1rem",
-                      fontWeight: 500,
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    No categories yet
+                  <p style={{ fontWeight: 600, fontSize: "1.1rem", marginBottom: "0.5rem" }}>
+                    No Categories Found
                   </p>
-                  <p style={{ fontSize: "0.9rem" }}>
-                    Create your first category to organize your sacred texts
-                  </p>
+                  <p>Start by creating your first category using the form.</p>
                 </div>
               ) : (
-                <div>
-                  {categories.map((cat, index) => (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {categories.map((cat) => (
                     <div
                       key={cat._id}
                       style={catStyles.categoryItem}
                       onMouseOver={(e) => {
-                        e.currentTarget.style.borderColor = "#f59e0b";
-                        e.currentTarget.style.background = "#fffbeb";
+                        e.currentTarget.style.borderColor = "#cbd5e1";
+                        e.currentTarget.style.background = "white";
+                        e.currentTarget.style.boxShadow = "0 2px 5px rgba(0,0,0,0.05)";
                       }}
                       onMouseOut={(e) => {
-                        e.currentTarget.style.borderColor = "transparent";
-                        e.currentTarget.style.background = "#fafafa";
+                        e.currentTarget.style.borderColor = "#e2e8f0";
+                        e.currentTarget.style.background = "#f8fafc";
+                        e.currentTarget.style.boxShadow = "none";
                       }}
                     >
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <div style={catStyles.categoryIcon}>🏷️</div>
+                      <div style={catStyles.categoryInfo}>
+                        <div style={catStyles.catIconBg}>
+                          <Tag size={20} />
+                        </div>
                         <div>
-                          <p
-                            style={{
-                              margin: 0,
-                              fontWeight: 600,
-                              color: "#1f2937",
-                              fontSize: "1rem",
-                            }}
-                          >
+                          <p style={{ margin: 0, fontWeight: 600, color: "#1e293b", fontSize: "1rem" }}>
                             {cat.name}
                           </p>
                           {cat.description && (
-                            <p
-                              style={{
-                                margin: "0.25rem 0 0",
-                                fontSize: "0.85rem",
-                                color: "#6b7280",
-                              }}
-                            >
+                            <p style={{ margin: "0.25rem 0 0", fontSize: "0.85rem", color: "#64748b", maxWidth: "400px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                               {cat.description}
                             </p>
                           )}
                         </div>
                       </div>
-                      <div style={{ display: "flex", gap: "0.5rem" }}>
+
+                      <div style={catStyles.actionBtns}>
                         <button
+                          title="Edit"
                           onClick={() => startEditCategory(cat)}
-                          style={{
-                            ...catStyles.actionBtn,
-                            background: "#fef3c7",
-                            color: "#92400e",
-                          }}
-                          onMouseOver={(e) =>
-                            (e.currentTarget.style.background = "#fde68a")
-                          }
-                          onMouseOut={(e) =>
-                            (e.currentTarget.style.background = "#fef3c7")
-                          }
+                          style={catStyles.editBtn}
+                          onMouseOver={(e) => e.currentTarget.style.background = "#bae6fd"}
+                          onMouseOut={(e) => e.currentTarget.style.background = "#e0f2fe"}
                         >
-                          ✏️ Edit
+                          <Pencil size={18} />
                         </button>
                         <button
+                          title="Delete"
                           onClick={() => deleteCategory(cat._id)}
-                          style={{
-                            ...catStyles.actionBtn,
-                            background: "#fee2e2",
-                            color: "#dc2626",
-                          }}
-                          onMouseOver={(e) =>
-                            (e.currentTarget.style.background = "#fecaca")
-                          }
-                          onMouseOut={(e) =>
-                            (e.currentTarget.style.background = "#fee2e2")
-                          }
+                          style={catStyles.deleteBtn}
+                          onMouseOver={(e) => e.currentTarget.style.background = "#fecaca"}
+                          onMouseOut={(e) => e.currentTarget.style.background = "#fee2e2"}
                         >
-                          🗑️ Delete
+                          <Trash2 size={18} />
                         </button>
                       </div>
                     </div>
@@ -968,6 +1005,9 @@ export default function AdminPage() {
         fontWeight: 600,
         margin: 0,
         textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        display: "flex",
+        alignItems: "center",
+        gap: "0.75rem",
       },
       subtitle: {
         color: "rgba(255,255,255,0.85)",
@@ -1092,6 +1132,9 @@ export default function AdminPage() {
         padding: "4rem 2rem",
         textAlign: "center",
         boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       },
     };
 
@@ -1101,7 +1144,7 @@ export default function AdminPage() {
         <div style={bookStyles.container}>
           <div style={bookStyles.header}>
             <div>
-              <h1 style={bookStyles.title}>📚 Book Library</h1>
+              <h1 style={bookStyles.title}><Library size={32} /> Book Library</h1>
               <p style={bookStyles.subtitle}>
                 Manage your collection of sacred texts
               </p>
@@ -1118,17 +1161,17 @@ export default function AdminPage() {
                 e.currentTarget.style.transform = "translateY(0)";
               }}
             >
-              ✨ Add New Book
+              <PlusCircle size={18} /> Add New Book
             </button>
           </div>
 
           <div style={bookStyles.statsRow}>
             <div style={bookStyles.statBadge}>
-              <span>📖</span> {books.length}{" "}
+              <BookText size={16} /> {books.length}{" "}
               {books.length === 1 ? "Book" : "Books"}
             </div>
             <div style={bookStyles.statBadge}>
-              <span>🌐</span>{" "}
+              <Globe size={16} />{" "}
               {books.reduce((acc, b) => acc + (b.translations?.length || 0), 0)}{" "}
               Translations
             </div>
@@ -1136,7 +1179,9 @@ export default function AdminPage() {
 
           {books.length === 0 ? (
             <div style={bookStyles.emptyState}>
-              <div style={{ fontSize: "4rem", marginBottom: "1.5rem" }}>📚</div>
+              <div style={{ marginBottom: "1.5rem", color: "#6b7280" }}>
+                <Library size={64} strokeWidth={1} />
+              </div>
               <h3
                 style={{
                   margin: "0 0 0.5rem",
@@ -1168,9 +1213,12 @@ export default function AdminPage() {
                   fontWeight: 600,
                   cursor: "pointer",
                   boxShadow: "0 4px 15px rgba(16, 185, 129, 0.4)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
                 }}
               >
-                ✨ Add Your First Book
+                <Plus size={20} /> Add Your First Book
               </button>
             </div>
           ) : (
@@ -1194,10 +1242,10 @@ export default function AdminPage() {
                 >
                   <div style={bookStyles.cardHeader}>
                     <span style={bookStyles.categoryBadge}>
-                      🏷️ {book.category || "Uncategorized"}
+                      <Tag size={12} /> {book.category || "Uncategorized"}
                     </span>
                     <span style={bookStyles.translationBadge}>
-                      🌐 {book.translations?.length || 0}
+                      <Globe size={14} /> {book.translations?.length || 0}
                     </span>
                   </div>
 
@@ -1205,19 +1253,19 @@ export default function AdminPage() {
 
                   <div style={bookStyles.bookMeta}>
                     {book.author && (
-                      <span style={bookStyles.metaItem}>✍️ {book.author}</span>
+                      <span style={bookStyles.metaItem}><User size={14} /> {book.author}</span>
                     )}
                     {book.year && (
-                      <span style={bookStyles.metaItem}>📅 {book.year}</span>
+                      <span style={bookStyles.metaItem}><Calendar size={14} /> {book.year}</span>
                     )}
                     {book.chapters && (
                       <span style={bookStyles.metaItem}>
-                        📚 {book.chapters} chapters
+                        <BookOpen size={14} /> {book.chapters} chapters
                       </span>
                     )}
                     {book.verses && (
                       <span style={bookStyles.metaItem}>
-                        📜 {book.verses} verses
+                        <Scroll size={14} /> {book.verses} verses
                       </span>
                     )}
                   </div>
@@ -1252,7 +1300,7 @@ export default function AdminPage() {
                         (e.currentTarget.style.background = "#ede9fe")
                       }
                     >
-                      🌐 Translations
+                      <Globe size={16} /> Translations
                     </button>
                     <button
                       onClick={() => startEdit(book)}
@@ -1268,7 +1316,7 @@ export default function AdminPage() {
                         (e.currentTarget.style.background = "#fef3c7")
                       }
                     >
-                      ✏️ Edit
+                      <Pencil size={16} /> Edit
                     </button>
                     <button
                       onClick={() => deleteBook(book._id)}
@@ -1284,7 +1332,7 @@ export default function AdminPage() {
                         (e.currentTarget.style.background = "#fee2e2")
                       }
                     >
-                      🗑️
+                      <Trash2 size={16} />
                     </button>
                   </div>
                 </div>
@@ -1525,16 +1573,16 @@ export default function AdminPage() {
 
     const getFieldIcon = (key) => {
       const icons = {
-        title: "📖",
-        category: "🏷️",
-        description: "📝",
-        originalLanguage: "🌐",
-        author: "✍️",
-        year: "📅",
-        verses: "📜",
-        chapters: "📚",
+        title: <Book size={18} />,
+        category: <Tag size={18} />,
+        description: <FileText size={18} />,
+        originalLanguage: <Globe size={18} />,
+        author: <User size={18} />,
+        year: <Calendar size={18} />,
+        verses: <Scroll size={18} />,
+        chapters: <BookOpen size={18} />,
       };
-      return icons[key] || "📋";
+      return icons[key] || <List size={18} />;
     };
 
     const filledFields = enabledFields.filter(
@@ -1560,11 +1608,11 @@ export default function AdminPage() {
                 (e.currentTarget.style.background = "rgba(255,255,255,0.15)")
               }
             >
-              ← Back
+              <ArrowLeft size={16} /> Back
             </button>
             <div>
               <h1 style={formStyles.title}>
-                {selectedBook ? "✏️ Edit Book" : "✨ Add New Book"}
+                {selectedBook ? <><Pencil style={{ display: 'inline' }} size={28} /> Edit Book</> : <><PlusCircle style={{ display: 'inline' }} size={28} /> Add New Book</>}
               </h1>
               <p style={formStyles.subtitle}>
                 {selectedBook
@@ -1584,7 +1632,7 @@ export default function AdminPage() {
                     color: "white",
                   }}
                 >
-                  📖
+                  <BookText size={20} />
                 </div>
                 <div>
                   <h3
@@ -1696,7 +1744,7 @@ export default function AdminPage() {
                           </select>
                           {getCategoryOptions().length === 0 && (
                             <p style={formStyles.hint}>
-                              💡 Create categories first in the Categories
+                              <Lightbulb size={12} style={{ display: 'inline', marginRight: '4px' }} /> Create categories first in the Categories
                               section
                             </p>
                           )}
@@ -1773,7 +1821,7 @@ export default function AdminPage() {
                         "0 4px 15px rgba(102, 126, 234, 0.4)";
                     }}
                   >
-                    {selectedBook ? "💾 Update Book" : "✨ Create Book"}
+                    {selectedBook ? <><Save size={18} /> Update Book</> : <><Plus size={18} /> Create Book</>}
                   </button>
                   <button
                     type="button"
@@ -1801,7 +1849,7 @@ export default function AdminPage() {
                     color: "#f59e0b",
                   }}
                 >
-                  ⚙️
+                  <Settings size={20} />
                 </div>
                 <div>
                   <h3 style={{ margin: 0, color: "#1f2937", fontSize: "1rem" }}>
@@ -1895,7 +1943,7 @@ export default function AdminPage() {
                   color: "#92400e",
                 }}
               >
-                <p style={{ margin: 0, fontWeight: 600 }}>💡 Pro Tip</p>
+                <p style={{ margin: 0, fontWeight: 600, display: "flex", alignItems: "center", gap: "0.5rem" }}><Lightbulb size={16} /> Pro Tip</p>
                 <p style={{ margin: "0.5rem 0 0" }}>
                   Enable only the fields you need. You can always add more later
                   when editing.

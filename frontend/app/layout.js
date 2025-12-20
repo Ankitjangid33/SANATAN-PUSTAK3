@@ -1,6 +1,5 @@
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import ClientLayout from "./components/ClientLayout";
 
 export const metadata = {
   title: "Sacred Texts Library",
@@ -12,9 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main className="main-content">{children}</main>
-        <Footer />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

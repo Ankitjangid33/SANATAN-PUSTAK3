@@ -1,15 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { BookOpen, Mail, Share2 } from "lucide-react";
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname === "/arya-super-admin/login") return null;
+
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
-          <h3>🕉️ Sacred Texts Library</h3>
+          <h3>
+            <BookOpen
+              style={{ display: "inline-block", marginRight: "0.5rem" }}
+              size={24}
+            />{" "}
+            Sacred Texts Library
+          </h3>
           <p>
             Explore the timeless wisdom of ancient scriptures including Vedas,
             Upanishads, Bhagavad Gita, and more.
@@ -54,8 +65,19 @@ export default function Footer() {
 
         <div className="footer-section">
           <h4>Contact</h4>
-          <p>📧 contact@sacredtexts.com</p>
-          <p>🙏 Spread the wisdom</p>
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <Mail size={16} /> contact@sacredtexts.com
+          </p>
+          <p style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Share2 size={16} /> Spread the wisdom
+          </p>
         </div>
       </div>
 
