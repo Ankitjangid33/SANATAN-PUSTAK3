@@ -1,3 +1,5 @@
 {
-  "/arya-super-admin/page": "app/arya-super-admin/page.js"
+  "/page": "app/page.js",
+  "/arya-super-admin/page": "app/arya-super-admin/page.js",
+  "/arya-super-admin/login/page": "app/arya-super-admin/login/page.js"
 }

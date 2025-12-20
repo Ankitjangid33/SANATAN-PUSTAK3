@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const booksRouter = require("./routes/books");
 const categoriesRouter = require("./routes/categories");
+const authRouter = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 // Routes
 app.use("/api/books", booksRouter);
 app.use("/api/categories", categoriesRouter);
+app.use("/api/auth", authRouter);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Backend is running" });

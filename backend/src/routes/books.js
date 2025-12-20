@@ -20,8 +20,45 @@ const upload = multer({ storage });
 // Get all books
 router.get("/", async (req, res) => {
   try {
-    const { category } = req.query;
-    const filter = category ? { category } : {};
+    const { category, search, lang } = req.query;
+    let filter = {};
+
+    // Category filter
+    if (category) {
+      filter.category = category;
+    }
+
+    // Search filter (supports Hindi and English)
+    if (search) {
+      const searchRegex = new RegExp(search, "i");
+
+      if (lang === "hindi") {
+        // Search only in Hindi fields
+        filter.$or = [
+          { title: searchRegex },
+          { description: searchRegex },
+          { "translations.language": "Hindi" },
+        ];
+      } else if (lang === "english") {
+        // Search only in English fields
+        filter.$or = [
+          { title: searchRegex },
+          { description: searchRegex },
+          { "translations.language": "English" },
+        ];
+      } else {
+        // Search in all fields (both Hindi and English)
+        filter.$or = [
+          { title: searchRegex },
+          { description: searchRegex },
+          { category: searchRegex },
+          { author: searchRegex },
+          { "translations.translatorName": searchRegex },
+          { "translations.language": searchRegex },
+        ];
+      }
+    }
+
     const books = await Book.find(filter).select("-translations.content");
     res.json(books);
   } catch (err) {

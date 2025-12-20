@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const DEFAULT_FIELDS = [
   { key: "title", label: "Title", type: "text", required: true },
@@ -15,6 +16,9 @@ const DEFAULT_FIELDS = [
 ];
 
 export default function AdminPage() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminUsername, setAdminUsername] = useState("");
   const [books, setBooks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -43,9 +47,24 @@ export default function AdminPage() {
   });
 
   useEffect(() => {
+    // Check authentication
+    const token = localStorage.getItem("adminToken");
+    const username = localStorage.getItem("adminUsername");
+    if (!token) {
+      router.push("/arya-super-admin/login");
+      return;
+    }
+    setIsAuthenticated(true);
+    setAdminUsername(username || "Admin");
     fetchBooks();
     fetchCategories();
-  }, []);
+  }, [router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminUsername");
+    router.push("/arya-super-admin/login");
+  };
 
   const fetchBooks = async () => {
     try {
@@ -371,7 +390,25 @@ export default function AdminPage() {
           }}
         >
           <p style={{ margin: 0, opacity: 0.8 }}>Logged in as</p>
-          <p style={{ margin: "0.25rem 0 0", fontWeight: 600 }}>Admin</p>
+          <p style={{ margin: "0.25rem 0 0", fontWeight: 600 }}>
+            {adminUsername}
+          </p>
+          <button
+            onClick={handleLogout}
+            style={{
+              marginTop: "0.75rem",
+              width: "100%",
+              padding: "0.5rem",
+              background: "rgba(255,255,255,0.2)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              borderRadius: "6px",
+              color: "white",
+              fontSize: "0.8rem",
+              cursor: "pointer",
+            }}
+          >
+            🚪 Logout
+          </button>
         </div>
       </div>
     </aside>
@@ -1871,8 +1908,8 @@ export default function AdminPage() {
     );
   };
 
-  // TRANSLATIONS VIEW
-  const TranslationsView = () => (
+  // TRANSLATIONS VIEW - rendered inline to prevent re-mount on state change
+  const renderTranslationsView = () => (
     <>
       <TopBar title={`Translations: ${selectedBook?.title}`} />
       <div style={styles.content}>
@@ -1907,6 +1944,7 @@ export default function AdminPage() {
                 Translator Name *
               </label>
               <input
+                type="text"
                 placeholder="e.g., Swami Vivekananda"
                 value={translationForm.translatorName}
                 onChange={(e) =>
@@ -1916,7 +1954,7 @@ export default function AdminPage() {
                   })
                 }
                 required
-                style={styles.input}
+                style={{ ...styles.input, boxSizing: "border-box" }}
               />
               <label
                 style={{
@@ -1930,6 +1968,7 @@ export default function AdminPage() {
                 Language *
               </label>
               <input
+                type="text"
                 placeholder="e.g., English, Hindi"
                 value={translationForm.language}
                 onChange={(e) =>
@@ -1939,7 +1978,7 @@ export default function AdminPage() {
                   })
                 }
                 required
-                style={styles.input}
+                style={{ ...styles.input, boxSizing: "border-box" }}
               />
               <label
                 style={{
@@ -2038,6 +2077,22 @@ export default function AdminPage() {
   );
 
   // MAIN RENDER
+  if (!isAuthenticated) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#f8fafc",
+        }}
+      >
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div style={styles.layout}>
       <Sidebar />
@@ -2049,7 +2104,7 @@ export default function AdminPage() {
           renderCategoriesView()}
         {(activeTab === "add" || view === "addBook" || view === "editBook") &&
           renderBookFormView()}
-        {view === "manageTranslations" && <TranslationsView />}
+        {view === "manageTranslations" && renderTranslationsView()}
       </main>
     </div>
   );

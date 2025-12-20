@@ -2,12 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [books, setBooks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+
+  const searchQuery = searchParams.get("search") || "";
+  const searchLang = searchParams.get("lang") || "all";
 
   useEffect(() => {
     fetchCategories();
@@ -15,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchBooks();
-  }, [category]);
+  }, [category, searchQuery, searchLang]);
 
   const fetchCategories = async () => {
     try {
@@ -30,7 +35,14 @@ export default function Home() {
   const fetchBooks = async () => {
     setLoading(true);
     try {
-      const url = category ? `/api/books?category=${category}` : "/api/books";
+      let url = "/api/books?";
+      const params = new URLSearchParams();
+
+      if (category) params.append("category", category);
+      if (searchQuery) params.append("search", searchQuery);
+      if (searchLang && searchLang !== "all") params.append("lang", searchLang);
+
+      url += params.toString();
       const res = await fetch(url);
       const data = await res.json();
       setBooks(Array.isArray(data) ? data : []);
@@ -45,15 +57,32 @@ export default function Home() {
       <header className="header">
         <h1>॥ Sacred Texts ॥</h1>
         <p>Explore the timeless wisdom of ancient scriptures</p>
+        <p className="header-hindi">
+          प्राचीन शास्त्रों की शाश्वत ज्ञान का अन्वेषण करें
+        </p>
       </header>
 
       <div className="container">
-        <div className="filter-bar">
+        {searchQuery && (
+          <div className="search-results-info">
+            <p>
+              Search results for: <strong>"{searchQuery}"</strong>
+              {searchLang !== "all" && (
+                <span> in {searchLang === "hindi" ? "हिंदी" : "English"}</span>
+              )}
+            </p>
+            <Link href="/" className="clear-search">
+              Clear Search
+            </Link>
+          </div>
+        )}
+
+        <div className="filter-bar" id="categories">
           <button
             className={`filter-btn ${category === "" ? "active" : ""}`}
             onClick={() => setCategory("")}
           >
-            All
+            All / सभी
           </button>
           {categories.map((cat) => (
             <button
@@ -68,11 +97,11 @@ export default function Home() {
 
         {loading ? (
           <p style={{ textAlign: "center", color: "#888" }}>
-            Loading sacred texts...
+            Loading sacred texts... / पवित्र ग्रंथ लोड हो रहे हैं...
           </p>
         ) : books.length === 0 ? (
           <p style={{ textAlign: "center", color: "#888" }}>
-            No texts found in this category.
+            No texts found. / कोई ग्रंथ नहीं मिला।
           </p>
         ) : (
           <div className="book-grid">
