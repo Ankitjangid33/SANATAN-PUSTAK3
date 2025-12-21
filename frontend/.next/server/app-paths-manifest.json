@@ -1,6 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/arya-super-admin/login/page": "app/arya-super-admin/login/page.js",
-  "/arya-super-admin/page": "app/arya-super-admin/page.js",
-  "/book/[id]/page": "app/book/[id]/page.js"
-}
